@@ -1,7 +1,9 @@
 /*
  * Create a list that holds all of your cards
  */
-
+var totalMoveNum=0;
+var openShowName="";
+var openShowID="";
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -56,21 +58,62 @@ function CreateAList()
 	var arr1 = new Array(16);
 	var arr2 ;
 	var ul1;
-	console.log('ul list length:'+ul_list.length);//数组成员个数
+	//console.log('ul list length:'+ul_list.length);//数组成员个数
 	//console.log(ul.style.display);
 	
 	for(var i=0; i < ul_list.length; i++)
 	{
-		console.log(ul_list[i].getAttribute('id'));
+		//console.log(ul_list[i].getAttribute('id'));
 		arr1[i] = ul_list[i].getAttribute('id');
+		ul_list[i].onclick = function(){
+			var showclass = this.className;
+			console.log(showclass);
+			
+			var i_tag = this.getElementsByTagName('i');
+			
+			console.log(i_tag);//.className);
+			totalMoveNum += 1;
+			console.log("totalMoveNum:"+totalMoveNum);
+			if("card" == showclass)
+			{
+				if(null == openShowName)//新开一对
+				{
+					this.className = "card open show";
+					openShowName = this.className;					
+				}
+				else if(openShowName != this.className)
+				{
+					openShowName = null;
+				}
+				else if(openShowName == this.className)
+				{
+					openShowName = null;
+					this.className = "card match";
+				}
+			}
+		}
 	}
-	
-	//restartButton(ul_list);
-	
+	/*	//It is OK below, yet learn to use 'this'.
+		ul_list[0].onclick = function(){
+			var showclass = ul_list[0].className;
+			console.log(showclass);
+			
+			var i_tag = ul_list[0].getElementsByTagName('i');
+			
+			console.log(i_tag);//.className);
+		}
+		ul_list[1].onclick = function(){
+			var showclass = ul_list[1].className;
+			console.log(showclass);
+			
+			var i_tag = ul_list[1].getElementsByTagName('i');
+			
+			console.log(i_tag);//.className);
+		}
+		*/
 	var div_list = document.getElementsByTagName('div');
 
-
-	console.log('div list length:'+div_list.length);
+	//console.log('div list length:'+div_list.length);
 	for(var i=0; i< div_list.length; i++)
 	{
 		console.log(div_list[i].className);
@@ -83,53 +126,32 @@ function CreateAList()
 					arr1[i] = ul_list[i].getAttribute('id');
 				}
 				arr2 = shuffle1(arr1);//执行完后arr1被清成null
-				//console.log('arr2.length:'+arr2.length);
-				//for(var j=0;j<arr2.length;j++)
-				//	console.log(j+':'+arr2[j]);
-				
-				/*if(null == document.getElementById('array_deck1'))
-				{
-					ul1 = document.createElement('ul');
-					ul1.className = 'deck';
-					ul1.id = 'array_deck1';
-				
-				}*/
 				
 				for(var k=0;k<16;k++)
-				{					
-					var li = document.createElement("li");
+				{
+					var li ;
 					
 					var idx = arr2[k].split('-');
 					console.log(idx);
 					
 					var j = parseInt(idx[1],10)-1;
-					
+					console.log(j);
 					console.log(ul_list[j]);//得到一整个<li>
 					//然后把当前的ul_list[] 逐个插入到ul中即可  先删光<li>?
-					//li = ul_list[j];//整个li赋值
-					//console.log(li);
-					//li.className = 'card open show';
-					//ul.appendChild(li);
-					ul_list[j].className = 'card open show';
-					ul.appendChild(ul_list[j]);
-				}
-				
-				
-			/*	for(var k=0;k<16;k++)
-				{
-					//var firstN = ul.firstChild;
+					li = ul_list[j];//整个li赋值
 					
-					//var li = document.createElement("li");
-					//li.id = arr2[k];
-					//console.log(li.id);
-					var idx = arr2[k].split('-');
-					console.log(idx);
-					//li.className = ul_list[parseInt(idx[1],10)].getAttribute('class');
-					console.log(ul_list[parseInt(idx[1],10)-1]);//得到一整个<li>
-					//然后把当前的ul_list[] 逐个插入到ul中即可  先删光<li>?
-					//console.log('li.id:'+li.id+'li.className'+li.className);
+					li.className = 'card';
+					ul.appendChild(li);
+				
 				}
-				 */
+				//console.log("new");
+				for(var k=0;k<16;k++)
+				{
+					if('card' != ul_list[k].className)
+						ul_list[k].className = 'card';
+					//console.log(ul_list[k]);
+				}
+			
 			}
 		}
 	}
@@ -164,7 +186,7 @@ function testShuffle()
 }
 
 //js 函数参数 不需要类型 var list 这个var是多余的
-function restartButton(list)
+/*function restartButton(list)
 {
 	var div_list = document.getElementsByTagName('div');
 	var arr1 = new Array(16);
@@ -183,7 +205,18 @@ function restartButton(list)
 			}
 		}
 	}
+}*/
+
+function ButtonSetOnclick(litemp)
+{
+			var showclass = litemp.className;
+			console.log(showclass);
+			
+			var i_tag = litemp.getElementsByTagName('i');
+			
+			console.log(i_tag);//.className);
 }
+
 addLoadEvent(CreateAList);
 //addLoadEvent(testShuffle);
 
