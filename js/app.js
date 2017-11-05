@@ -83,9 +83,7 @@ function CreateAList()
 					arr1[i] = ul_list[i].getAttribute('id');
 				}
 				arr2 = shuffle1(arr1);//执行完后arr1被清成null
-				//console.log('arr2.length:'+arr2.length);
-				//for(var j=0;j<arr2.length;j++)
-				//	console.log(j+':'+arr2[j]);
+				
 				
 				/*if(null == document.getElementById('array_deck1'))
 				{
