@@ -69,6 +69,7 @@ function CreateAList()
 			var showclass = this.className;
 			console.log(showclass);
 			var flag1 = 0;
+			var flag2 = 0;
 			var i_tag = this.getElementsByTagName('i');
 			
 			console.log(i_tag[0].className);
@@ -76,20 +77,8 @@ function CreateAList()
 			console.log("totalMoveNum:"+totalMoveNum);
 			if("card" == showclass)
 			{
-		/*		if(1)//null == openShowName)//新开一对
-				{
-					this.className = "card open show";
-					openShowName = this.className;					
-				}
-				else if(openShowName != this.className)
-				{
-					openShowName = null;
-				}
-				else if(openShowName == this.className)
-				{
-					openShowName = null;
-					this.className = "card match";
-				}*/
+		
+				var ulk = 0;
 				var ultemp = document.getElementById('array_deck').getElementsByTagName('li');
 				for(var k=0;k<ultemp.length;k++)
 				{
@@ -104,13 +93,21 @@ function CreateAList()
 							this.className = 'card match';
 							ultemp[k].className = 'card match';
 							flag1 = 0;
+							flag2 = 1;//配对ok
 							break;
 						}
+						else
+						{
+							flag2 = 0;
+						}
+						ulk = k;
 					}
 				}
+
 				if(('card' == this.className)&&(0 == flag1))
 					this.className = "card open show";
-				
+				else if(0 == flag2)
+					ultemp[ulk].className = 'card';
 			}
 		}
 	}
