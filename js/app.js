@@ -68,15 +68,15 @@ function CreateAList()
 		ul_list[i].onclick = function(){
 			var showclass = this.className;
 			console.log(showclass);
-			
+			var flag1 = 0;
 			var i_tag = this.getElementsByTagName('i');
 			
-			console.log(i_tag);//.className);
+			console.log(i_tag[0].className);
 			totalMoveNum += 1;
 			console.log("totalMoveNum:"+totalMoveNum);
 			if("card" == showclass)
 			{
-				if(null == openShowName)//新开一对
+		/*		if(1)//null == openShowName)//新开一对
 				{
 					this.className = "card open show";
 					openShowName = this.className;					
@@ -89,7 +89,28 @@ function CreateAList()
 				{
 					openShowName = null;
 					this.className = "card match";
+				}*/
+				var ultemp = document.getElementById('array_deck').getElementsByTagName('li');
+				for(var k=0;k<ultemp.length;k++)
+				{
+					var clsname = ultemp[k].getAttribute('class');	
+					if('card open show' == clsname)//如果有上一张点开的
+					{
+						var itag1 = ultemp[k].getElementsByTagName('i');
+						console.log(itag1[0].className);
+						flag1 = 1;
+						if(itag1[0].className == i_tag[0].className)//和新点开比较
+						{
+							this.className = 'card match';
+							ultemp[k].className = 'card match';
+							flag1 = 0;
+							break;
+						}
+					}
 				}
+				if(('card' == this.className)&&(0 == flag1))
+					this.className = "card open show";
+				
 			}
 		}
 	}
