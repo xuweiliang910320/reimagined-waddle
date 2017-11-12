@@ -2,7 +2,7 @@
  * Create a list that holds all of your cards
  */
 var totalMoveNum=0;
-var openShowName="";
+var openShowNum=0;
 var openShowID="";
 /*
  * Display the cards on the page
@@ -51,6 +51,30 @@ function insertAfter(newElement,targetElement){
 	}
 }
 
+function setMoveNum(num)
+{
+	var varspan = document.getElementsByTagName('span');//varspan 是一个list
+	if('moves' == varspan[0].className)
+	{
+		console.log('num:'+num);
+		varspan[0].innerHTML = ''+num;
+	}
+	
+}
+
+function setDispNone(u1, u2)
+{
+
+	//ul_list[i].className = 'card';//ul_list[i] 即this
+	//ultemp[ulk].className = 'card';
+	u1.setAttribute('class','card');
+	console.log(u1.getAttribute('id'));
+	u2.setAttribute('class','card');
+	console.log(u2.getAttribute('id'));
+
+	openShowNum = 0;
+}
+
 function CreateAList()
 {
 	var ul = document.getElementById('array_deck');
@@ -58,12 +82,10 @@ function CreateAList()
 	var arr1 = new Array(16);
 	var arr2 ;
 	var ul1;
-	//console.log('ul list length:'+ul_list.length);//数组成员个数
-	//console.log(ul.style.display);
 	
 	for(var i=0; i < ul_list.length; i++)
 	{
-		//console.log(ul_list[i].getAttribute('id'));
+		
 		arr1[i] = ul_list[i].getAttribute('id');
 		ul_list[i].onclick = function(){
 			var showclass = this.className;
@@ -72,12 +94,14 @@ function CreateAList()
 			var flag2 = 0;
 			var i_tag = this.getElementsByTagName('i');
 			
-			console.log(i_tag[0].className);
-			totalMoveNum += 1;
-			console.log("totalMoveNum:"+totalMoveNum);
+			//console.log(i_tag[0].className);
+			
+			//console.log("totalMoveNum:"+totalMoveNum);
+			
 			if("card" == showclass)
 			{
-		
+				totalMoveNum += 1;
+				setMoveNum(totalMoveNum);
 				var ulk = 0;
 				var ultemp = document.getElementById('array_deck').getElementsByTagName('li');
 				for(var k=0;k<ultemp.length;k++)
@@ -94,6 +118,7 @@ function CreateAList()
 							ultemp[k].className = 'card match';
 							flag1 = 0;
 							flag2 = 1;//配对ok
+							openShowNum = 0;
 							break;
 						}
 						else
@@ -105,9 +130,26 @@ function CreateAList()
 				}
 
 				if(('card' == this.className)&&(0 == flag1))
-					this.className = "card open show";
+				{
+					this.className = 'card open show';
+					openShowNum++;
+				}
+				//else if(0 == flag2)
+				//	ultemp[ulk].setAttribute('class','card');// = 'card';
 				else if(0 == flag2)
-					ultemp[ulk].className = 'card';
+				{
+					if(openShowNum < 2)
+					{
+						openShowNum++;
+						//this.className = 'card open show';//ul_list[i].className
+						this.setAttribute('class','card open show');
+						//ultemp[ulk].className = 'card open show';
+						var u1 = this;
+						var u2 = ultemp[ulk];
+						setTimeout(setDispNone,1000,u1,u2);//最后两个是调用函数的参数1, 2
+					}
+					
+				}
 			}
 		}
 	}
@@ -137,8 +179,11 @@ function CreateAList()
 		console.log(div_list[i].className);
 		if('restart'==div_list[i].className)//when click restart
 		{
+
 			div_list[i].onclick = function(){
 				ul.style.display = '';//"none";
+				totalMoveNum = 0;
+				setMoveNum(totalMoveNum);
 				for(var i=0; i < ul_list.length; i++)
 				{
 					arr1[i] = ul_list[i].getAttribute('id');
