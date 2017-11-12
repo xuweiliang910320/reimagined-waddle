@@ -98,7 +98,7 @@ function CreateAList()
 			
 			//console.log("totalMoveNum:"+totalMoveNum);
 			
-			if("card" == showclass)
+			if(("card" == showclass)&&(openShowNum < 2))
 			{
 				totalMoveNum += 1;
 				setMoveNum(totalMoveNum);
