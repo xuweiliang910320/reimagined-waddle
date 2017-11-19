@@ -123,6 +123,7 @@ function CreateAList()
 							if(8 == matchNum)//游戏结束
 							{
 								console.log('game over');
+								stop();
 								this.parentNode.style.display = 'none';//console.log(this.parentNode);//整个ul class='deck' id='array_deck'
 								
 								var divlist = document.getElementsByTagName('div');
@@ -241,10 +242,13 @@ function CreateAList()
 						ul_list[k].className = 'card';
 					//console.log(ul_list[k]);
 				}
-			
+				Reset();
+				start();
 			}
 		}
 	}
+	Reset();
+	start();
 }
 function RestartButton()
 {
@@ -295,6 +299,8 @@ function RestartButton()
 			divlist[p].style.display = 'none';
 		}
 	}
+	Reset();
+	start();
 }
 
 function shuffle1(arry)
@@ -327,35 +333,49 @@ function testShuffle()
 }
 
 //js 函数参数 不需要类型 var list 这个var是多余的
-/*function restartButton(list)
-{
-	var div_list = document.getElementsByTagName('div');
-	var arr1 = new Array(16);
 
-	console.log('div list length:'+div_list.length);
-	for(var i=0; i< div_list.length; i++)
+var hour,minute,second;//时 分 秒
+hour=minute=second=0;//初始化
+var millisecond=0;//毫秒
+var int;
+function Reset()//重置
+{
+	window.clearInterval(int);
+	millisecond=hour=minute=second=0;
+	document.getElementById('timetext').value='00hour00min00sec000milisec';
+}
+
+function start()//开始
+{
+	int=setInterval(timer,50);
+}
+
+function timer()//计时
+{
+	millisecond=millisecond+50;
+	if(millisecond>=1000)
 	{
-		console.log(div_list[i].className);
-		if('restart'==div_list[i].className)
-		{
-			div_list[i].onclick = function(){
-				//shuffle1(arr1);
-				console.log('arr1.length:'+arr1.length);
-				for(var j=0;j<arr1.length;j++)
-					console.log(j+':'+arr1[j]);
-			}
-		}
+		millisecond=0;
+		second=second+1;
 	}
-}*/
+	if(second>=60)
+	{
+		second=0;
+		minute=minute+1;
+	}
 
-function ButtonSetOnclick(litemp)
+	if(minute>=60)
+	{
+		minute=0;
+		hour=hour+1;
+	}
+	document.getElementById('timetext').value=hour+'hour'+minute+'min'+second+'sec'+millisecond+'milisec';
+
+}
+
+function stop()//暂停
 {
-			var showclass = litemp.className;
-			console.log(showclass);
-			
-			var i_tag = litemp.getElementsByTagName('i');
-			
-			console.log(i_tag);//.className);
+	window.clearInterval(int);
 }
 
 addLoadEvent(CreateAList);
