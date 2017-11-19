@@ -4,6 +4,7 @@
 var totalMoveNum=0;
 var openShowNum=0;
 var matchNum=0;
+var starNum = 0;
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -58,6 +59,24 @@ function setMoveNum(num)
 	{
 		console.log('num:'+num);
 		varspan[0].innerHTML = ''+num;
+	}
+	var ul1 = document.getElementById('3stars');
+	var list2 = ul1.getElementsByTagName('li');
+	
+	if(num < 15)//3 s
+	{
+		starNum = 3;//nothing
+	}
+	else if(num < 30)//2 s
+	{
+		starNum = 2;
+		list2[2].style.display = 'none';
+	}
+	else//1 s
+	{
+		starNum = 1;
+		list2[1].style.display = 'none';
+		list2[2].style.display = 'none';
 	}
 	
 }
@@ -145,7 +164,8 @@ function CreateAList()
 									var vh1 = document.createElement('h1');
 									vh1.innerHTML = 'Congratulations!You Won!';
 									var vh4 = document.createElement('h4');
-									vh4.innerHTML = 'With '+totalMoveNum+' moves';
+									vh4.innerHTML = 'With '+totalMoveNum+' moves'+' and '
+									+ starNum + ' stars';
 									var td1=document.createElement("td");
 									td1.innerHTML = '<input type="button" value="Play again" onclick="RestartButton();" />';//
 									
@@ -198,7 +218,7 @@ function CreateAList()
 	
 	var div_list = document.getElementsByTagName('div');
 
-	//console.log('div list length:'+div_list.length);
+	
 	for(var i=0; i< div_list.length; i++)
 	{
 		console.log(div_list[i].className);
@@ -235,15 +255,30 @@ function CreateAList()
 					ul.appendChild(li);
 				
 				}
-				//console.log("new");
+				
 				for(var k=0;k<16;k++)
 				{
 					if('card' != ul_list[k].className)
 						ul_list[k].className = 'card';
-					//console.log(ul_list[k]);
+					
 				}
 				Reset();
 				start();
+				var ul1 = document.getElementById('3stars');
+				var list2 = ul1.getElementsByTagName('li');
+				list2[0].style.display = '';
+				list2[1].style.display = '';
+				list2[2].style.display = '';
+				
+				var divlist = document.getElementsByTagName('div');
+				
+				for(p=0;p<divlist.length;p++)
+				{
+					if('success' === divlist[p].id)
+					{
+						divlist[p].style.display = 'none';
+					}
+				}
 			}
 		}
 	}
@@ -283,12 +318,12 @@ function RestartButton()
 		ul.appendChild(li);
 	
 	}
-	//console.log("new");
+	
 	for(var k=0;k<16;k++)
 	{
 		if('card' != ul_list[k].className)
 			ul_list[k].className = 'card';
-		//console.log(ul_list[k]);
+		
 	}
 	var divlist = document.getElementsByTagName('div');
 	
@@ -301,6 +336,11 @@ function RestartButton()
 	}
 	Reset();
 	start();
+	var ul1 = document.getElementById('3stars');
+	var list2 = ul1.getElementsByTagName('li');
+	list2[0].style.display = '';
+	list2[1].style.display = '';
+	list2[2].style.display = '';
 }
 
 function shuffle1(arry)
