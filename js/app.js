@@ -204,11 +204,12 @@ function CreateAList()
 		if('restart'===div_list[i].className)//when click restart
 		{
 
-			div_list[i].onclick = //RestartButton(ul,ul_list,arr1,arr2);
+			div_list[i].onclick = //RestartButton();//ul,ul_list,arr1,arr2);
 			function(){
 				ul.style.display = '';//"none";
 				totalMoveNum = 0;
 				matchNum = 0;
+				openShowNum = 0;
 				setMoveNum(totalMoveNum);
 				for(var i=0; i < ul_list.length; i++)
 				{
@@ -253,6 +254,7 @@ function RestartButton()
 	var arr2 ;
 	ul.style.display = '';//"none";
 	totalMoveNum = 0;
+	openShowNum = 0;
 	matchNum = 0;
 	setMoveNum(totalMoveNum);
 	for(var i=0; i < ul_list.length; i++)
