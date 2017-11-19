@@ -1,9 +1,9 @@
-/*
+ï»¿/*
  * Create a list that holds all of your cards
  */
 var totalMoveNum=0;
 var openShowNum=0;
-var openShowID="";
+var matchNum=0;
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -53,7 +53,7 @@ function insertAfter(newElement,targetElement){
 
 function setMoveNum(num)
 {
-	var varspan = document.getElementsByTagName('span');//varspan ÊÇÒ»¸ölist
+	var varspan = document.getElementsByTagName('span');//varspan æ˜¯ä¸€ä¸ªlist
 	if('moves' == varspan[0].className)
 	{
 		console.log('num:'+num);
@@ -65,7 +65,7 @@ function setMoveNum(num)
 function setDispNone(u1, u2)
 {
 
-	//ul_list[i].className = 'card';//ul_list[i] ¼´this
+	//ul_list[i].className = 'card';//ul_list[i] å³this
 	//ultemp[ulk].className = 'card';
 	u1.setAttribute('class','card');
 	console.log(u1.getAttribute('id'));
@@ -78,10 +78,10 @@ function setDispNone(u1, u2)
 function CreateAList()
 {
 	var ul = document.getElementById('array_deck');
-	var ul_list = ul.getElementsByTagName('li');//»ñµÃli¼¯ºÏ
+	var ul_list = ul.getElementsByTagName('li');//è·å¾—lié›†åˆ
 	var arr1 = new Array(16);
 	var arr2 ;
-	var ul1;
+
 	
 	for(var i=0; i < ul_list.length; i++)
 	{
@@ -107,18 +107,59 @@ function CreateAList()
 				for(var k=0;k<ultemp.length;k++)
 				{
 					var clsname = ultemp[k].getAttribute('class');	
-					if('card open show' == clsname)//Èç¹ûÓĞÉÏÒ»ÕÅµã¿ªµÄ
+					if('card open show' == clsname)//å¦‚æœæœ‰ä¸Šä¸€å¼ ç‚¹å¼€çš„
 					{
 						var itag1 = ultemp[k].getElementsByTagName('i');
 						console.log(itag1[0].className);
 						flag1 = 1;
-						if(itag1[0].className == i_tag[0].className)//ºÍĞÂµã¿ª±È½Ï
+						if(itag1[0].className == i_tag[0].className)//å’Œæ–°ç‚¹å¼€æ¯”è¾ƒ
 						{
 							this.className = 'card match';
 							ultemp[k].className = 'card match';
 							flag1 = 0;
-							flag2 = 1;//Åä¶Ôok
+							flag2 = 1;//é…å¯¹ok
 							openShowNum = 0;
+							matchNum++;
+							if(8 == matchNum)//æ¸¸æˆç»“æŸ
+							{
+								console.log('game over');
+								this.parentNode.style.display = 'none';//console.log(this.parentNode);//æ•´ä¸ªul class='deck' id='array_deck'
+								
+								var divlist = document.getElementsByTagName('div');
+								var flag3 = 0;
+								for(p=0;p<divlist.length;p++)
+								{
+									if('success' === divlist[p].id)
+									{
+										flag3 = 1;
+										divlist[p].style.display = '';
+									}
+								}
+								
+								if(0 === flag3)//æ— success div
+								{
+									var vdiv1 = document.createElement('div');
+									this.parentNode.parentNode.appendChild(vdiv1);
+									vdiv1.setAttribute('id','success');
+									var vh1 = document.createElement('h1');
+									vh1.innerHTML = 'Congratulations!You Won!';
+									var vh4 = document.createElement('h4');
+									vh4.innerHTML = 'With '+totalMoveNum+' moves';
+									var td1=document.createElement("td");
+									td1.innerHTML = '<input type="button" value="Play again" onclick="RestartButton();" />';//
+									
+									vdiv1.appendChild(vh1);
+									vdiv1.appendChild(vh4);
+									vdiv1.appendChild(td1);									
+								}
+
+								/*var vh1 = document.createElement('h1');
+								this.parentNode.parentNode.appendChild(vh1);
+								vh1.innerHTML = 'Congratulations!You Won!';
+								var vh4 = document.createElement('h4');
+								this.parentNode.parentNode.appendChild(vh4);
+								vh4.innerHTML = 'With '+totalMoveNum+' moves';*/
+							}
 							break;
 						}
 						else
@@ -146,49 +187,34 @@ function CreateAList()
 						//ultemp[ulk].className = 'card open show';
 						var u1 = this;
 						var u2 = ultemp[ulk];
-						setTimeout(setDispNone,1000,u1,u2);//×îºóÁ½¸öÊÇµ÷ÓÃº¯ÊıµÄ²ÎÊı1, 2
+						setTimeout(setDispNone,1000,u1,u2);//æœ€åä¸¤ä¸ªæ˜¯è°ƒç”¨å‡½æ•°çš„å‚æ•°1, 2
 					}
 					
 				}
 			}
 		}
 	}
-	/*	//It is OK below, yet learn to use 'this'.
-		ul_list[0].onclick = function(){
-			var showclass = ul_list[0].className;
-			console.log(showclass);
-			
-			var i_tag = ul_list[0].getElementsByTagName('i');
-			
-			console.log(i_tag);//.className);
-		}
-		ul_list[1].onclick = function(){
-			var showclass = ul_list[1].className;
-			console.log(showclass);
-			
-			var i_tag = ul_list[1].getElementsByTagName('i');
-			
-			console.log(i_tag);//.className);
-		}
-		*/
+	
 	var div_list = document.getElementsByTagName('div');
 
 	//console.log('div list length:'+div_list.length);
 	for(var i=0; i< div_list.length; i++)
 	{
 		console.log(div_list[i].className);
-		if('restart'==div_list[i].className)//when click restart
+		if('restart'===div_list[i].className)//when click restart
 		{
 
-			div_list[i].onclick = function(){
+			div_list[i].onclick = //RestartButton(ul,ul_list,arr1,arr2);
+			function(){
 				ul.style.display = '';//"none";
 				totalMoveNum = 0;
+				matchNum = 0;
 				setMoveNum(totalMoveNum);
 				for(var i=0; i < ul_list.length; i++)
 				{
 					arr1[i] = ul_list[i].getAttribute('id');
 				}
-				arr2 = shuffle1(arr1);//Ö´ĞĞÍêºóarr1±»Çå³Énull
+				arr2 = shuffle1(arr1);//æ‰§è¡Œå®Œåarr1è¢«æ¸…æˆnull
 				
 				for(var k=0;k<16;k++)
 				{
@@ -199,9 +225,9 @@ function CreateAList()
 					
 					var j = parseInt(idx[1],10)-1;
 					console.log(j);
-					console.log(ul_list[j]);//µÃµ½Ò»Õû¸ö<li>
-					//È»ºó°Ñµ±Ç°µÄul_list[] Öğ¸ö²åÈëµ½ulÖĞ¼´¿É  ÏÈÉ¾¹â<li>?
-					li = ul_list[j];//Õû¸öli¸³Öµ
+					console.log(ul_list[j]);//å¾—åˆ°ä¸€æ•´ä¸ª<li>
+					//ç„¶åæŠŠå½“å‰çš„ul_list[] é€ä¸ªæ’å…¥åˆ°ulä¸­å³å¯  å…ˆåˆ å…‰<li>?
+					li = ul_list[j];//æ•´ä¸ªlièµ‹å€¼
 					
 					li.className = 'card';
 					ul.appendChild(li);
@@ -219,10 +245,60 @@ function CreateAList()
 		}
 	}
 }
+function RestartButton()
+{
+	var ul = document.getElementById('array_deck');
+	var ul_list = ul.getElementsByTagName('li');//è·å¾—lié›†åˆ
+	var arr1 = new Array(16);
+	var arr2 ;
+	ul.style.display = '';//"none";
+	totalMoveNum = 0;
+	matchNum = 0;
+	setMoveNum(totalMoveNum);
+	for(var i=0; i < ul_list.length; i++)
+	{
+		arr1[i] = ul_list[i].getAttribute('id');
+	}
+	arr2 = shuffle1(arr1);//æ‰§è¡Œå®Œåarr1è¢«æ¸…æˆnull
+	
+	for(var k=0;k<16;k++)
+	{
+		var li ;
+		var idx = arr2[k].split('-');
+		console.log(idx);
+		
+		var j = parseInt(idx[1],10)-1;
+		console.log(j);
+		console.log(ul_list[j]);//å¾—åˆ°ä¸€æ•´ä¸ª<li>
+		//ç„¶åæŠŠå½“å‰çš„ul_list[] é€ä¸ªæ’å…¥åˆ°ulä¸­å³å¯  å…ˆåˆ å…‰<li>?
+		li = ul_list[j];//æ•´ä¸ªlièµ‹å€¼
+		
+		li.className = 'card';
+		ul.appendChild(li);
+	
+	}
+	//console.log("new");
+	for(var k=0;k<16;k++)
+	{
+		if('card' != ul_list[k].className)
+			ul_list[k].className = 'card';
+		//console.log(ul_list[k]);
+	}
+	var divlist = document.getElementsByTagName('div');
+	
+	for(p=0;p<divlist.length;p++)
+	{
+		if('success' === divlist[p].id)
+		{
+			divlist[p].style.display = 'none';
+		}
+	}
+}
+
 function shuffle1(arry)
 {
 	var sortArr = new Array();
-	var len = arry.length;//»ñÈ¡Êı×é³¤¶ÈÖ¸¶¨Ëæ»ú´ÎÊı 
+	var len = arry.length;//è·å–æ•°ç»„é•¿åº¦æŒ‡å®šéšæœºæ¬¡æ•° 
 
 
 	for (var i = 0; i < len;) {
@@ -238,8 +314,8 @@ function shuffle1(arry)
 }
 function testShuffle()
 {
-	var testArr = new Array("ÖĞ¹ú","ÃÀ¹ú","Ó¢¹ú","·¨¹ú","µÂ¹ú","Î÷°àÑÀ","Ï£À°",
-"Òâ´óÀû","ÈÕ±¾","º«¹ú","ÄáÈÕÀûÑÇ","Ó¡¶È");
+	var testArr = new Array("ä¸­å›½","ç¾å›½","è‹±å›½","æ³•å›½","å¾·å›½","è¥¿ç­ç‰™","å¸Œè…Š",
+"æ„å¤§åˆ©","æ—¥æœ¬","éŸ©å›½","å°¼æ—¥åˆ©äºš","å°åº¦");
 
 
      var newArr = shuffle1(testArr);
@@ -248,7 +324,7 @@ function testShuffle()
 	
 }
 
-//js º¯Êı²ÎÊı ²»ĞèÒªÀàĞÍ var list Õâ¸övarÊÇ¶àÓàµÄ
+//js å‡½æ•°å‚æ•° ä¸éœ€è¦ç±»å‹ var list è¿™ä¸ªvaræ˜¯å¤šä½™çš„
 /*function restartButton(list)
 {
 	var div_list = document.getElementsByTagName('div');
