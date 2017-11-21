@@ -174,12 +174,9 @@ function CreateAList()
 									vdiv1.appendChild(td1);									
 								}
 
-								/*var vh1 = document.createElement('h1');
-								this.parentNode.parentNode.appendChild(vh1);
-								vh1.innerHTML = 'Congratulations!You Won!';
-								var vh4 = document.createElement('h4');
-								this.parentNode.parentNode.appendChild(vh4);
-								vh4.innerHTML = 'With '+totalMoveNum+' moves';*/
+								var sect = document.getElementById('scor');
+								sect.style.display = 'none';
+								
 							}
 							break;
 						}
@@ -341,6 +338,10 @@ function RestartButton()
 	list2[0].style.display = '';
 	list2[1].style.display = '';
 	list2[2].style.display = '';
+	
+	var sect = document.getElementById('scor');
+	sect.style.display = '';
+
 }
 
 function shuffle1(arry)
