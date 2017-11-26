@@ -58,6 +58,12 @@ function setMoveNum(num) {
 			temp = num - 1;
 		else
 			temp = num;
+		
+		if(1 == num)
+		{
+			Reset();
+            start();
+		}
         varspan[0].innerHTML = '' + temp;
     }
     var ul1 = document.getElementById('3stars');
@@ -166,8 +172,9 @@ function createAList() {
                                 }
 								else
 								{
+									//var vdiv1 = document.getElementById()
 									var vh4 = document.getElementsByTagName('h4');
-									vh4.innerHTML = 'With ' + (totalMoveNum-1) + ' moves' + ' and ' +
+									vh4[0].innerHTML = 'With ' + (totalMoveNum-1) + ' moves' + ' and ' +
                                         starNum + ' stars. ' + 'Time: ' + txt1.value;
 								}
                                 
@@ -247,8 +254,8 @@ function createAList() {
                             ul_list[k].className = 'card';
 
                     }
-                    Reset();
-                    start();
+                    //Reset();
+                    //start();
                     var ul1 = document.getElementById('3stars');
                     var list2 = ul1.getElementsByTagName('li');
                     list2[0].style.display = '';
@@ -265,8 +272,8 @@ function createAList() {
                 }
         }
     }
-    Reset();
-    start();
+    //Reset();
+    //start();
 }
 
 function RestartButton() {
@@ -312,8 +319,8 @@ function RestartButton() {
             divlist[p].style.display = 'none';
         }
     }
-    Reset();
-    start();
+    //Reset();
+    //start();
     var ul1 = document.getElementById('3stars');
     var list2 = ul1.getElementsByTagName('li');
     list2[0].style.display = '';
