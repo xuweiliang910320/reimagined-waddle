@@ -254,7 +254,7 @@ function createAList() {
                             ul_list[k].className = 'card';
 
                     }
-                    //Reset();
+                    Reset();//这里应该留着 否则未完成的情况下restart 时间在没点按钮时也会走
                     //start();
                     var ul1 = document.getElementById('3stars');
                     var list2 = ul1.getElementsByTagName('li');
